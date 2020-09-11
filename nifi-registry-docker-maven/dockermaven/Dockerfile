@@ -24,6 +24,8 @@ ARG NIFI_REGISTRY_VERSION
 
 ENV NIFI_REGISTRY_BASE_DIR /opt/nifi-registry
 ENV NIFI_REGISTRY_HOME ${NIFI_REGISTRY_BASE_DIR}/nifi-registry-current
+ENV NIFI_REGISTRY_PID_DIR ${NIFI_REGISTRY_HOME}/run
+ENV NIFI_REGISTRY_LOG_DIR ${NIFI_REGISTRY_HOME}/logs
 
 ADD sh/ ${NIFI_REGISTRY_BASE_DIR}/scripts/
 
@@ -33,6 +35,9 @@ RUN unzip ${NIFI_REGISTRY_BASE_DIR}/nifi-registry-${NIFI_REGISTRY_VERSION}-bin.z
     && mv ${NIFI_REGISTRY_BASE_DIR}/nifi-registry-${NIFI_REGISTRY_VERSION} ${NIFI_REGISTRY_HOME} \
     && ln -s ${NIFI_REGISTRY_HOME} ${NIFI_REGISTRY_BASE_DIR}/nifi-registry-${NIFI_REGISTRY_VERSION}
 
+# Create necessary directories
+RUN mkdir -p ${NIFI_REGISTRY_HOME}/conf \
+    && mkdir -p ${NIFI_REGISTRY_LOG_DIR}
 
 FROM openjdk:8-jre
 LABEL maintainer="Apache NiFi Registry <dev@nifi.apache.org>"
@@ -43,11 +48,12 @@ ARG GID=1000
 
 ENV NIFI_REGISTRY_BASE_DIR /opt/nifi-registry
 ENV NIFI_REGISTRY_HOME ${NIFI_REGISTRY_BASE_DIR}/nifi-registry-current
+ENV NIFI_REGISTRY_PID_DIR ${NIFI_REGISTRY_HOME}/run
+ENV NIFI_REGISTRY_LOG_DIR ${NIFI_REGISTRY_HOME}/logs
 
 # Setup NiFi user and create necessary directories
 RUN groupadd -g ${GID} nifi || groupmod -n nifi `getent group ${GID} | cut -d: -f1` \
     && useradd --shell /bin/bash -u ${UID} -g ${GID} -m nifi \
-    && chown -R nifi:nifi ${NIFI_REGISTRY_BASE_DIR} \
     && apt-get update \
     && apt-get install -y jq xmlstarlet procps
 
