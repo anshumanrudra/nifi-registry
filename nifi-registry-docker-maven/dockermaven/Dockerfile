@@ -41,7 +41,7 @@ RUN unzip ${NIFI_REGISTRY_BASE_DIR}/nifi-registry-${NIFI_REGISTRY_VERSION}-bin.z
 COPY $NIFI_REGISTRY_TOOLKIT_BINARY $NIFI_REGISTRY_BASE_DIR
 RUN unzip ${NIFI_REGISTRY_BASE_DIR}/nifi-registry-toolkit-${NIFI_REGISTRY_VERSION}-bin.zip -d ${NIFI_REGISTRY_BASE_DIR} \
     && rm ${NIFI_REGISTRY_BASE_DIR}/nifi-registry-toolkit-${NIFI_REGISTRY_VERSION}-bin.zip \
-    && mv ${NIFI_REGISTRY_BASE_DIR}/nifi-registry-toolkit-${NIFI_REGISTRY_VERSION} ${NIFI_TOOLKIT_HOME} \
+    && mv ${NIFI_REGISTRY_BASE_DIR}/nifi-registry-toolkit-${NIFI_REGISTRY_VERSION} ${NIFI_REGISTRY_TOOLKIT_HOME} \
     && ln -s ${NIFI_REGISTRY_TOOLKIT_HOME} ${NIFI_REGISTRY_BASE_DIR}/nifi-registry-toolkit-${NIFI_VERSION}
 
 # Create necessary directories
