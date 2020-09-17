@@ -148,11 +148,17 @@
                 <groupId>com.nimbusds</groupId>
                 <artifactId>oauth2-oidc-sdk</artifactId>
                 <version>6.16.2</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.nimbusds</groupId>
+                        <artifactId>nimbus-jose-jwt</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.nimbusds</groupId>
                 <artifactId>nimbus-jose-jwt</artifactId>
-                <version>9.0.1</version>
+                <version>4.41.1</version>
             </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
